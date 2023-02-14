@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3023200813788158748}
   - component: {fileID: 7984441318941505562}
   m_Layer: 0
-  m_Name: Bumper
+  m_Name: Bumper timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a3d3b01f3a272c74d9f81a6cdc9517da, type: 2}
+  - {fileID: 2100000, guid: cd042e00516c478498b7c6f42941e70b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,5 +111,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38efc4fff92b31146a829115b4b7aef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bumperData: {fileID: 11400000, guid: 82b0e5930544c1946b9cae2ec41b456f, type: 2}
+  bumperData: {fileID: 11400000, guid: f7e165d0e6c1e1a49ad8b848778ba2b0, type: 2}
   destroyAmount: 0

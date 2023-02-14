@@ -43,8 +43,7 @@ public class SpawnData : ActionData
 
     void Acting(Target target)
     {
-
-        if (spawnPosition != SpawnPositionEnum.TargetObject)
+        if (spawnPosition == SpawnPositionEnum.TargetObject)
         {
             Vector3 pos = target.transform.position + positionOffset;
 
@@ -61,6 +60,10 @@ public class SpawnData : ActionData
                 }
 
             }
+        }
+        else
+        {
+            //TODO
         }
     }
 

@@ -10,5 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 380b9b16327baf742afe6c9cd700d513, type: 3}
-  m_Name: (rename me) New Level Data
+  m_Name: Level 2
   m_EditorClassIdentifier: 
+  NextSceneName: Ball scene 1
