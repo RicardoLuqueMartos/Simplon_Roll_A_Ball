@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetAxis("Vertical") != 0f)
         {
-            _rigidbody.AddForce(0f, 0f, Input.GetAxis("Vertical") + 0.5f);
+            _rigidbody.AddForce(0f, 0f, Input.GetAxis("Vertical") * 0.5f);
         }
     }
 

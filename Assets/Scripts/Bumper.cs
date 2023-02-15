@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bumper : MonoBehaviour
-{  
+{
     public BumperData bumperData;
+    public Healthbar healthbar;
 
     [SerializeField]
     int destroyAmount = 0;
@@ -21,9 +22,11 @@ public class Bumper : MonoBehaviour
 
             if (bumperData._destroyType == ObjectData.DestroyTypeEnum.ContactAmount)
             {
+                destroyAmount = destroyAmount + 1;
                 if (bumperData._destroyAmount == destroyAmount)
                     DestroySelf();
-                else destroyAmount = destroyAmount + 1;
+                else                 
+                    healthbar.UpdateHealthBar(destroyAmount);
             }
         }
     }

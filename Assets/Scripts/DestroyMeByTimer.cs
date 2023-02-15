@@ -5,13 +5,30 @@ using UnityEngine;
 public class DestroyMeByTimer : MonoBehaviour
 {
     [SerializeField]
-    float Delay = 1.5f;
+    int Delay = 3;
+    [SerializeField]
+    int elapsed = 0;
+
+    public Healthbar healthbar;
 
     public void SetDelay (int delay) { Delay = delay; }
 
-    private void OnEnable()
+    public void LaunchTimer()
     {
-        Invoke("DestroySelf", Delay);
+        elapsed = Delay;
+        InvokeRepeating("UpdateTimer", 1, 1);
+    }
+
+    private void UpdateTimer()
+    {
+        if (elapsed <= Delay) 
+        { 
+            elapsed --;
+
+            if (healthbar) healthbar.UpdateHealthBar(elapsed);
+        }
+        if (elapsed == 0)
+            DestroySelf();
     }
 
     void DestroySelf()

@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1207128579636565597, guid: 5a9ec31716662064f99125892de34cf3, type: 3}
   destroyType: 1
-  bumpForce: 100
   destroyAmount: 5
-  positionOffset: {x: 0, y: 0, z: 0}
+  bumpForce: 500

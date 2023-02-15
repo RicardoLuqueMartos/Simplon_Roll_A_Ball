@@ -17,5 +17,9 @@ public class ObjectData : ScriptableObject
     [SerializeField]
     DestroyTypeEnum destroyType;
     public DestroyTypeEnum _destroyType { get { return destroyType; } }
+
+    [SerializeField]
+    int destroyAmount = 10;
+    public int _destroyAmount { get { return destroyAmount; } }
     #endregion Variables
 }

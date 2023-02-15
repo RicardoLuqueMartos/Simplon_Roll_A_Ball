@@ -8,4 +8,10 @@ public class Target : MonoBehaviour
     ActionData action;
     public ActionData _action { get { return action; } }
 
+    public enum SpawnModeEnum { OnTargetObject, OneBySpawnerObject, OneOnRandomSpawnerObject }
+    [SerializeField]
+    SpawnModeEnum spawnMode;
+    public SpawnModeEnum _spawnMode { get { return spawnMode; } }
+
+    public List<SpawnerObject> SpawnerObjectsList = new List<SpawnerObject>();
 }
