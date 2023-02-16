@@ -4,9 +4,15 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] float moveSpeed = 10;
+    Vector2 moveInput;
+    Vector3 moveValue;
+
+
     private Rigidbody _rigidbody;
     private int ScoreValue = 0;
 
@@ -15,6 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] LevelData currentLevel;
 
     [SerializeField] List<Target> TargetLists = new List<Target>();
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -43,21 +50,27 @@ public class Player : MonoBehaviour
         _scoreText.text = "Score : " + ScoreValue.ToString();
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        MoveBall();
+        ApplyMove();
     }
 
-    void MoveBall()
+    void OnMove(InputValue inputValue)
     {
-        if (Input.GetAxis("Horizontal") != 0f)
-        {
-            _rigidbody.AddForce(Input.GetAxis("Horizontal") * 0.5f, 0f, 0f);
-        }
-        if (Input.GetAxis("Vertical") != 0f)
-        {
-            _rigidbody.AddForce(0f, 0f, Input.GetAxis("Vertical") * 0.5f);
-        }
+        moveInput = inputValue.Get<Vector2>();       
+    }
+
+    void OnJump()
+    {
+        Debug.Log("OnJump");
+        transform.GetComponent<Renderer>().material.color = Color.blue;
+    }
+
+    void ApplyMove()
+    {
+        moveValue = new Vector3(moveInput.x, 0, moveInput.y);
+         
+        _rigidbody.AddForce(moveValue  * moveSpeed);       
     }
 
     private void OnTriggerEnter(Collider other)

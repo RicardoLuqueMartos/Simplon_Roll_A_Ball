@@ -11,4 +11,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Ball scene 2.unity
     guid: b94722c5612f62842a7b1495ea63c8c2
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 0d70286f4db8a164ebbc9ff48ce12b5f, type: 2}
