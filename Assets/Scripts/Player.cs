@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.InputSystem;
+using System.Xml.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class Player : MonoBehaviour
     [SerializeField] LevelData currentLevel;
 
     [SerializeField] List<Target> TargetLists = new List<Target>();
+    public List<ObjectData> ObjectsList = new List<ObjectData>();
+    public List<SpawnerObject> SpawnerObjectsList = new List<SpawnerObject>();
+
+    bool buttonLocked = false;
+    [SerializeField] GameObject button;
 
     void Start()
     {
@@ -32,6 +38,9 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
+        TargetLists = FindObjectsOfType<Target>().ToList();
+        SpawnerObjectsList = FindObjectsOfType<SpawnerObject>().ToList();
+
         if (PlayerPrefs.GetInt("GameStarted") == 0)
             StartGame();
         else LoadGame();
@@ -62,10 +71,27 @@ public class Player : MonoBehaviour
 
     void OnJump()
     {
-        Debug.Log("OnJump");
-        transform.GetComponent<Renderer>().material.color = Color.blue;
+        if (buttonLocked == false)
+        {
+            if (moveSpeed == 10) moveSpeed = 20;
+            else if (moveSpeed == 20) moveSpeed = 30;
+            else if (moveSpeed == 30) moveSpeed = 10;
+            LockButton();
+            Invoke("UnlockButton", 1);
+        }
     }
 
+    void LockButton()
+    {
+        buttonLocked = true;
+        button.SetActive(false);
+    }
+    void UnlockButton()
+    {
+        buttonLocked = false;
+        button.SetActive(true);
+
+    }
     void ApplyMove()
     {
         moveValue = new Vector3(moveInput.x, 0, moveInput.y);
@@ -77,10 +103,9 @@ public class Player : MonoBehaviour
     {
         Target target = other.GetComponent<Target>();
         if (target != null)
-        {
-            RemoveFromList(target);
+        {  
             LaunchAction(target);
-            Destroy(other.gameObject);
+            RemoveFromList(target, other.gameObject);
             UpdateScore();
         }
     }
@@ -90,22 +115,22 @@ public class Player : MonoBehaviour
         Target target = collision.gameObject.GetComponent<Target>();
         if (target != null)
         {
-            RemoveFromList(target);
             LaunchAction(target);
-            Destroy(collision.gameObject);
+            RemoveFromList(target, collision.gameObject);
             UpdateScore();
         }
     }
 
-    void RemoveFromList(Target target)
+    void RemoveFromList(Target target, GameObject obj)
     {
         TargetLists.Remove(target);
+        Destroy(obj);
     }
 
     void LaunchAction(Target target)
     {
         if (target._action != null) {
-            target._action.LaunchAction(target);
+            target._action.LaunchAction(target, this);
     
         }
     }

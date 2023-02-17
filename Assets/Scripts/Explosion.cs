@@ -20,7 +20,7 @@ public class Explosion : MonoBehaviour
             if (Exploded == false) { 
             otherRigidBody.AddExplosionForce(_explosionForce, collision.contacts[0].point, 5);
                 Exploded = true;
-            //    Invoke("DestroySelf", delay);
+                Invoke("DestroySelf", delay);
             }
         }
     }

@@ -6,6 +6,10 @@ using UnityEngine;
 public class SpawnData : ActionData
 {
     #region Variables
+   
+    [SerializeField]
+    bool RandomizedSpawner = false;
+
     [SerializeField]
     ObjectData objectToSpawn;
     public ObjectData _objectToSpawn { get { return objectToSpawn; } }
@@ -20,26 +24,26 @@ public class SpawnData : ActionData
     Vector3 positionOffset;
     public Vector3 _positionOffset { get { return positionOffset; } }
 
-    public override void LaunchAction()
+    public override void LaunchAction(Player player)
     {
-        Acting();
+        Acting(player);
     }
 
-    void Acting()
+    void Acting(Player player)
     {
         GameObject newObj = (GameObject)Instantiate(objectToSpawn._prefab);
 
     }
 
-    public override void LaunchAction(Target target)
+    public override void LaunchAction(Target target, Player player)
     {
         if (target != null)
         {               
-            Acting(target);
+            Acting(target, player);
         }       
     }
 
-    void Acting(Target target)
+    void Acting(Target target, Player player)
     {
         Vector3 pos = new Vector3();
         Quaternion rot = new Quaternion();
@@ -59,17 +63,25 @@ public class SpawnData : ActionData
         }
         else if (target._spawnMode == Target.SpawnModeEnum.OneOnRandomSpawnerObject)
         {
-            int ran = UnityEngine.Random.Range(0, target.SpawnerObjectsList.Count);
+            int ran = UnityEngine.Random.Range(0, player.SpawnerObjectsList.Count);
 
-            pos = target.SpawnerObjectsList[ran].transform.position + positionOffset;
-            rot = target.SpawnerObjectsList[ran].transform.rotation;
+            pos = player.SpawnerObjectsList[ran].transform.position + positionOffset;
+            rot = player.SpawnerObjectsList[ran].transform.rotation;
         }
-        SpawnObject(pos, rot);
+        SpawnObject(pos, rot, player);
     }
 
-    void SpawnObject(Vector3 pos, Quaternion rot)
+    void SpawnObject(Vector3 pos, Quaternion rot, Player player)
     {
-        GameObject newObj = (GameObject)Instantiate(objectToSpawn._prefab, pos, rot, null);
+        ObjectData objToSpawn = objectToSpawn;
+
+        if (RandomizedSpawner == true)
+        {
+            int ran = UnityEngine.Random.Range(0, player.ObjectsList.Count);
+            objToSpawn = player.ObjectsList[ran];
+        }       
+
+        GameObject newObj = (GameObject)Instantiate(objToSpawn._prefab, pos, rot, null);
         Bumper bumper = newObj.GetComponent<Bumper>();
         Obstacle obstacle = newObj.GetComponent<Obstacle>();
 
@@ -77,7 +89,7 @@ public class SpawnData : ActionData
         {
             bumper.bumperData = objectToSpawn as BumperData;
 
-            if (bumper.bumperData._destroyType == ObjectData.DestroyTypeEnum.Timer)
+            if (bumper.bumperData != null && bumper.bumperData._destroyType == ObjectData.DestroyTypeEnum.Timer)
             {
                 DestroyMeByTimer timer = newObj.AddComponent<DestroyMeByTimer>();
                 timer.SetDelay(bumper.bumperData._destroyAmount);
@@ -87,7 +99,7 @@ public class SpawnData : ActionData
                     timer.LaunchTimer();
                 }
             }
-            if (bumper.healthbar != null)
+            if (bumper.healthbar != null & bumper.bumperData != null)
             {
                 bumper.healthbar.maxHealthPoints = bumper.bumperData._destroyAmount;
                 bumper.healthbar.enabled = true;

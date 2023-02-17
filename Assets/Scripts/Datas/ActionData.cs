@@ -8,7 +8,7 @@ public abstract class ActionData : ScriptableObject
     
     #endregion Variables
 
-    public abstract void LaunchAction();
-    public abstract void LaunchAction(Target target);
+    public abstract void LaunchAction(Player player);
+    public abstract void LaunchAction(Target target, Player player);
 
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960edbcba9ea6844abdc9dad2e9a9cda, type: 3}
   m_Name: Spawn Bumper 1 timer
   m_EditorClassIdentifier: 
+  RandomizedSpawner: 1
   objectToSpawn: {fileID: 11400000, guid: f7e165d0e6c1e1a49ad8b848778ba2b0, type: 2}
-  spawnPosition: 0
+  positionOffset: {x: 0, y: 0, z: 0}

@@ -18,15 +18,20 @@ public class Bumper : MonoBehaviour
         {
             Rigidbody otherRigidBody = collision.transform.GetComponent<Rigidbody>();
 
-            otherRigidBody.AddExplosionForce(bumperData._bumpForce, collision.contacts[0].point, 5);
-
-            if (bumperData._destroyType == ObjectData.DestroyTypeEnum.ContactAmount)
+            if (bumperData == null) DestroySelf();
+            else
             {
-                destroyAmount = destroyAmount + 1;
-                if (bumperData._destroyAmount == destroyAmount)
-                    DestroySelf();
-                else                 
-                    healthbar.UpdateHealthBar(destroyAmount);
+                otherRigidBody.AddExplosionForce(bumperData._bumpForce, collision.contacts[0].point, 5);
+
+                if (bumperData != null && bumperData._destroyType == ObjectData.DestroyTypeEnum.ContactAmount)
+                {
+                    destroyAmount = destroyAmount + 1;
+                    if (bumperData._destroyAmount <= destroyAmount)
+                        DestroySelf();
+                    else if (healthbar != null)
+                        healthbar.UpdateHealthBar(destroyAmount);
+                }
+                else if (bumperData == null) DestroySelf();
             }
         }
     }
