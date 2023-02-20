@@ -40,8 +40,8 @@ public class CameraManager : MonoBehaviour
         y = angles.x;
 
         // hide mouse cursor 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+     //   Cursor.visible = false;
+     //   Cursor.lockState = CursorLockMode.Locked;
 
         #endregion Orbit
     }

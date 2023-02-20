@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private int ScoreValue = 0;
 
     [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private TMP_Text _speedText;
 
     [SerializeField] LevelData currentLevel;
 
@@ -40,6 +41,8 @@ public class Player : MonoBehaviour
     {
         TargetLists = FindObjectsOfType<Target>().ToList();
         SpawnerObjectsList = FindObjectsOfType<SpawnerObject>().ToList();
+
+        _speedText.text = "Speed : " + moveSpeed.ToString();
 
         if (PlayerPrefs.GetInt("GameStarted") == 0)
             StartGame();
@@ -76,6 +79,7 @@ public class Player : MonoBehaviour
             if (moveSpeed == 10) moveSpeed = 20;
             else if (moveSpeed == 20) moveSpeed = 30;
             else if (moveSpeed == 30) moveSpeed = 10;
+            _speedText.text = "Speed : "+ moveSpeed.ToString();
             LockButton();
             Invoke("UnlockButton", 1);
         }
